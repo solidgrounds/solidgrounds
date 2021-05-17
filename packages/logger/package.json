@@ -1,4 +1,22 @@
 {
   "name": "@solidgrounds/logger",
-  "version": "0.0.1"
+  "private": false,
+  "version": "0.0.1",
+  "description": "Dependency injection container",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/solidgrounds/solidgrounds.git"
+  },
+  "keywords": [
+    "logger"
+  ],
+  "author": "Eric Pinxteren",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/solidgrounds/issues"
+  },
+  "homepage": "https://github.com/solidgrounds",
+  "publishConfig": {
+    "access": "public"
+  }
 }

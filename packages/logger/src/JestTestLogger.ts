@@ -1,6 +1,8 @@
 import { LoggerInterface } from './LoggerInterface';
 import { AbstractFunctionLogger } from './AbstractFunctionLogger';
 
+declare var jest: any;
+
 export class JestTestLogger extends AbstractFunctionLogger implements LoggerInterface {
 
   public trace = jest.fn();
