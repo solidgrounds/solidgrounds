@@ -15,7 +15,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  defaults:
+  core:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     steps:
@@ -23,33 +23,11 @@ jobs:
         uses: actions/setup-node@v2.1.5
         with:
           node-version: 14
-      - name: Yarn install cache
-        uses: c-hive/gha-yarn-cache@v1
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-  # This workflow contains a single job called "build"
-  test:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
+      - name: Yarn install cache
+        uses: c-hive/gha-yarn-cache@v1
       - name: Nrwl Nx
         uses: MansaGroup/nrwl-nx-action@v2.1.0
         with:
-          targets: test
-          all: true
-
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      - name: Nrwl Nx
-        uses: MansaGroup/nrwl-nx-action@v2.1.0
-        with:
-          targets: build
-          all: true
+          targets: lint,test,build
