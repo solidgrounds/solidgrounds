@@ -31,8 +31,15 @@ jobs:
         uses: c-hive/gha-yarn-cache@v1
       - name: Install yarn packages
         run: yarn install --frozen-lockfile
-      - name: Nrwl Nx
+      - name: Lint and unit tests
         uses: MansaGroup/nrwl-nx-action@v2.1.0
         with:
           nxCloud: true
-          targets: lint,test,build
+          targets: lint,test
+          args: --with-deps
+      - name: Build
+        uses: MansaGroup/nrwl-nx-action@v2.1.0
+        with:
+          nxCloud: true
+          targets: build
+          args: --with-deps
