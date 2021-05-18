@@ -1,10 +1,13 @@
 import { LoggerInterface } from './LoggerInterface';
 import { AbstractFunctionLogger } from './AbstractFunctionLogger';
 
-declare var jest: any;
+// eslint-disable-line
+declare let jest: any;
 
-export class JestTestLogger extends AbstractFunctionLogger implements LoggerInterface {
-
+export class JestTestLogger
+  extends AbstractFunctionLogger
+  implements LoggerInterface
+{
   public trace = jest.fn();
   public info = jest.fn();
   public warn = jest.fn();
@@ -18,5 +21,4 @@ export class JestTestLogger extends AbstractFunctionLogger implements LoggerInte
     this.debug.mockReset();
     this.error.mockReset();
   }
-
 }
