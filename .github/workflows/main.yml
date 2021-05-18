@@ -30,4 +30,5 @@ jobs:
       - name: Nrwl Nx
         uses: MansaGroup/nrwl-nx-action@v2.1.0
         with:
+          nxCloud: true
           targets: lint,test,build
