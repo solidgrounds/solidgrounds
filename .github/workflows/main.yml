@@ -34,8 +34,7 @@ jobs:
         with:
           cmd: install
       - name: Create nx cache directory
-        with:
-          cmd: mkdir node_modules/.cache
+        run: mkdir node_modules/.cache
       - name: Nrwl Nx
         uses: MansaGroup/nrwl-nx-action@v2.1.0
         with:
