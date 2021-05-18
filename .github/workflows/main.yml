@@ -33,6 +33,9 @@ jobs:
         uses: borales/actions-yarn@v2.0.0
         with:
           cmd: install
+      - name: Create nx cache directory
+        with:
+          cmd: mkdir node_modules/.cache
       - name: Nrwl Nx
         uses: MansaGroup/nrwl-nx-action@v2.1.0
         with:
