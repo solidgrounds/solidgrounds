@@ -12,9 +12,7 @@ it('Can use async service as synchronise service', async () => {
       }),
     };
   };
-  const result = await solidgrounds()
-    .add(MyFeature)
-    .build();
+  const result = await solidgrounds().add(MyFeature).build();
   expect(result.foo).toEqual(1);
 });
 
@@ -34,9 +32,7 @@ it('Can depend on async services as if they where synchronise service', async ()
       }),
     };
   };
-  const result = await solidgrounds()
-    .add(MyFeature)
-    .build();
+  const result = await solidgrounds().add(MyFeature).build();
   expect(result.foo).toEqual('foo-bar');
 });
 
@@ -47,7 +43,10 @@ interface MyAsyncFeatureService {
   bb: string;
 }
 
-const MyAsyncFeature: FF<MyAsyncFeatureService> = ({ synchronize, compose }) => {
+const MyAsyncFeature: FF<MyAsyncFeatureService> = ({
+  synchronize,
+  compose,
+}) => {
   return {
     foo() {
       return `foo-${this.bar()}-${this.aa()}`;
@@ -55,29 +54,28 @@ const MyAsyncFeature: FF<MyAsyncFeatureService> = ({ synchronize, compose }) => 
     bar: synchronize(async () => {
       return 'bar';
     }),
-    aa: synchronize(compose(async (bb: string) => {
-      return `aa-${bb}`;
-    }, 'bb')),
-    bb: synchronize(compose(async (bar) => {
-      return `bb-${bar}`;
-    }, 'bar')),
+    aa: synchronize(
+      compose(async (bb: string) => {
+        return `aa-${bb}`;
+      }, 'bb')
+    ),
+    bb: synchronize(
+      compose(async (bar) => {
+        return `bb-${bar}`;
+      }, 'bar')
+    ),
   };
 };
 it('Can depend nested async services as if they where synchronise service', async () => {
-  const result = await solidgrounds()
-    .add(MyAsyncFeature)
-    .build();
+  const result = await solidgrounds().add(MyAsyncFeature).build();
   expect(result.foo).toEqual('foo-bar-aa-bb-bar');
 });
 
 it('Can merge async services', async () => {
   const MergedFeature: FF<MyAsyncFeatureService> = ({ merge }) => {
-    const result = merge(MyAsyncFeature).create();
-    return result;
+    return merge(MyAsyncFeature).create();
   };
-  const result = await solidgrounds()
-    .add(MergedFeature)
-    .build();
+  const result = await solidgrounds().add(MergedFeature).build();
   expect(result.foo).toEqual('foo-bar-aa-bb-bar');
 });
 
@@ -93,9 +91,7 @@ it('Can catch errors', async () => {
       }),
     };
   };
-  const result = solidgrounds()
-    .add(MyFeature)
-    .build();
+  const result = solidgrounds().add(MyFeature).build();
   await expect(result).rejects.toThrow('Hi!');
 });
 
@@ -115,8 +111,6 @@ it('Can catch referenced errors', async () => {
       },
     };
   };
-  const result = solidgrounds()
-    .add(MyFeature)
-    .build();
+  const result = solidgrounds().add(MyFeature).build();
   await expect(result).rejects.toThrow('foo');
 });

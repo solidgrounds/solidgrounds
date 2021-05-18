@@ -1,11 +1,11 @@
-import {createComposeContext} from "../ComposeContext";
-import {CompileContext} from "../CompileContext";
-import {USF} from "@solidgrounds/core";
-import { __ } from "../Curry";
+import { createComposeContext } from '../ComposeContext';
+import { CompileContext } from '../CompileContext';
+import { __ } from '../Curry';
+import { USF } from '../../Value';
 
 it('Should be able to compose with key', () => {
   type T = {
-    hi: string
+    hi: string;
   };
 
   const mock: CompileContext<T> = {
@@ -15,7 +15,7 @@ it('Should be able to compose with key', () => {
 
   const context = createComposeContext<T>(mock);
 
-  const test = (arg: string): string =>  arg + ' eric';
+  const test = (arg: string): string => arg + ' eric';
 
   const result = context.compose(test, 'hi');
 
@@ -24,23 +24,21 @@ it('Should be able to compose with key', () => {
 });
 
 it('Compose key should exists', () => {
-  type T = {};
-
-  const mock: CompileContext<T> = {
+  const mock: CompileContext<unknown> = {
     getServiceFactory: jest.fn((key: string) => () => {
       throw new Error(key + ' not exists');
     }),
     serviceReferenceFactory: (s: unknown) => s,
-  } as unknown as CompileContext<T>;
+  } as unknown as CompileContext<unknown>;
 
-  const context = createComposeContext<T>(mock);
+  const context = createComposeContext<unknown>(mock);
 
-  const test = (arg: string): string =>  arg + ' eric';
+  const test = (arg: string): string => arg + ' eric';
 
-  // @ts-expect-error
+  // @ts-expect-error wrong arg.
   const result = context.compose(test, 'hi');
 
-  expect(result).toThrowError('hi not exists')
+  expect(result).toThrowError('hi not exists');
 });
 
 it('Compose argument can be curried', () => {
@@ -63,14 +61,18 @@ it('Compose argument can be curried', () => {
 
   const context = createComposeContext<T>(mock);
 
-  const test = (arg: string): string =>  arg + ' eric';
+  const test = (arg: string): string => arg + ' eric';
 
   const newVar = context.compose(test)(() => 'Hallo');
   expect(newVar()).toEqual('Hallo eric');
   expect(context.compose(test)('greetings')()).toEqual('Hi eric');
 });
 
-const TestFunctionWithAge = (greetings: string, name: string, age: number): string => `${greetings} ${name} (${age})`;
+const TestFunctionWithAge = (
+  greetings: string,
+  name: string,
+  age: number
+): string => `${greetings} ${name} (${age})`;
 
 it('Compose argument can be curried complex', () => {
   type T = {
@@ -85,7 +87,7 @@ it('Compose argument can be curried complex', () => {
         return key;
       }
       if (key === 'greetings') {
-        return () => 'What\'s up';
+        return () => "What's up";
       }
       if (key === 'name') {
         return () => 'Jane';
@@ -100,7 +102,7 @@ it('Compose argument can be curried complex', () => {
   const a = context.compose(TestFunctionWithAge)(__, __, () => 23);
   const b = a(__, 'name');
   const c = b('greetings');
-  expect(c()).toEqual('What\'s up Jane (23)');
+  expect(c()).toEqual("What's up Jane (23)");
 });
 
 it('Compose argument can be curried directly', () => {
@@ -115,7 +117,12 @@ it('Compose argument can be curried directly', () => {
   } as unknown as CompileContext<unknown>;
 
   const context = createComposeContext<unknown>(mock);
-  const d = context.compose(TestFunctionWithAge, __, () => 'Groot', () => 203);
+  const d = context.compose(
+    TestFunctionWithAge,
+    __,
+    () => 'Groot',
+    () => 203
+  );
 
   expect(d(() => 'I AM')()).toEqual('I AM Groot (203)');
 });
@@ -134,30 +141,35 @@ it('Compose argument can be curried indefinitely', () => {
   const context = createComposeContext<unknown>(mock);
   const d = context.compose(TestFunctionWithAge);
 
-
   // Typing still work.
 
-  // @ts-expect-error
+  // @ts-expect-error it's not a string
   d(() => 1);
 
-  // @ts-expect-error
-  d(() => "", () => 1);
-
+  d(
+    // @ts-expect-error it's not a string
+    () => '',
+    () => 1
+  );
 
   const yeeAaa = d()()()();
 
-  // @ts-expect-error
+  // @ts-expect-error it's not a string
   yeeAaa(() => 1);
 
-
-  expect(yeeAaa(() => 'I AM', () => 'Groot', () => 12)()).toEqual('I AM Groot (12)');
+  expect(
+    yeeAaa(
+      () => 'I AM',
+      () => 'Groot',
+      () => 12
+    )()
+  ).toEqual('I AM Groot (12)');
 });
-
 
 it('Should be able to compose with keys', () => {
   type T = {
-    greeter: string,
-    name: string
+    greeter: string;
+    name: string;
   };
 
   const mock: CompileContext<T> = {
@@ -182,11 +194,10 @@ it('Should be able to compose with keys', () => {
   expect(result()).toEqual('Hallo John');
 });
 
-
 it('Should be able to compose async with keys', async () => {
   type T = {
-    greeter: string,
-    name: string
+    greeter: string;
+    name: string;
   };
 
   const mock: CompileContext<T> = {
@@ -204,25 +215,23 @@ it('Should be able to compose async with keys', async () => {
 
   const context = createComposeContext<T>(mock);
 
-  const test = async (greeter: string, name: string): Promise<string> => greeter + ' ' + name;
+  const test = async (greeter: string, name: string): Promise<string> =>
+    greeter + ' ' + name;
 
   const result = context.compose(test, 'greeter', 'name');
 
   expect(await result()).toEqual('Hallo John');
 });
 
-
 it('Should be able to compose with sf', () => {
-  type T = {};
-
-  const mock: CompileContext<T> = {
+  const mock: CompileContext<unknown> = {
     getServiceFactory: (s: unknown) => s,
     serviceReferenceFactory: (s: unknown) => s,
-  } as unknown as CompileContext<T>;
+  } as unknown as CompileContext<unknown>;
 
-  const context = createComposeContext<T>(mock);
+  const context = createComposeContext<unknown>(mock);
 
-  const test = (arg: string): string =>  arg + ' eric';
+  const test = (arg: string): string => arg + ' eric';
 
   function directArg() {
     return 'hallo';
@@ -232,4 +241,3 @@ it('Should be able to compose with sf', () => {
 
   expect(result()).toEqual('hallo eric');
 });
-

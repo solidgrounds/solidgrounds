@@ -1,18 +1,17 @@
-import {createConstructContext} from "../ConstructContext";
-import {CompileContext} from "../CompileContext";
-import {createComposeContext} from "../ComposeContext";
+import { createConstructContext } from '../ConstructContext';
+import { CompileContext } from '../CompileContext';
 
 class Test {
-  public output: string
+  public output: string;
 
-  constructor(greeter: string, name: string = 'John') {
+  constructor(greeter: string, name = 'John') {
     this.output = greeter + ' ' + name;
   }
 }
 
 it('Should be able to construct with key', () => {
   type T = {
-    hi: string
+    hi: string;
   };
 
   const mock: CompileContext<T> = {
@@ -30,7 +29,7 @@ it('Should be able to construct with key', () => {
 
 it('Allow Currying', () => {
   type T = {
-    hi: string
+    hi: string;
   };
 
   const mock: CompileContext<T> = {
@@ -40,37 +39,33 @@ it('Allow Currying', () => {
 
   const context = createConstructContext<T>(mock);
 
-  const result  = context.construct(Test);
+  const result = context.construct(Test);
 
-  const output = result("hi");
+  const output = result('hi');
   expect(output().output).toEqual('hallo John');
   expect(mock.getServiceFactory).toBeCalledWith('hi');
-
 });
 
-
 it('Construct key should exists', () => {
-  type T = {};
-
-  const mock: CompileContext<T> = {
+  const mock: CompileContext<unknown> = {
     getServiceFactory: jest.fn((key: string) => () => {
       throw new Error(key + ' not exists');
     }),
     serviceReferenceFactory: (s: unknown) => s,
-  } as unknown as CompileContext<T>;
+  } as unknown as CompileContext<unknown>;
 
-  const context = createConstructContext<T>(mock);
+  const context = createConstructContext<unknown>(mock);
 
-  // @ts-expect-error
+  // @ts-expect-error hi does not exists
   const result = context.construct(Test, 'hi');
 
-  expect(result).toThrowError('hi not exists')
+  expect(result).toThrowError('hi not exists');
 });
 
 it('Should be able to construct with keys', () => {
   type T = {
-    greeter: string,
-    name: string
+    greeter: string;
+    name: string;
   };
 
   const mock: CompileContext<T> = {
@@ -88,15 +83,13 @@ it('Should be able to construct with keys', () => {
 
   const context = createConstructContext<T>(mock);
 
-
-
   const result = context.construct(Test, 'greeter', 'name');
 
   expect(result().output).toEqual('Hallo John');
 });
 
 it('Should be able to construct with sf', () => {
-  type T = {};
+  type T = unknown;
 
   const mock: CompileContext<T> = {
     getServiceFactory: (s: unknown) => s,
@@ -113,4 +106,3 @@ it('Should be able to construct with sf', () => {
 
   expect(result().output).toEqual('hallo eric');
 });
-

@@ -1,28 +1,31 @@
 /**
  * Context for creating new service factories.
  */
-import {createNamedFunction, functionName, once} from "./Util";
+import { createNamedFunction, functionName, once } from './Util';
 import {
   SF,
   isServiceFactoryReference,
   ServiceFactoryReference,
   ServiceFactoryInfo,
-  isFeatureFactoryInvokeWindow,
   isServiceFactoryInvokeWindow,
   ServiceFactoryInvokeWindow,
-  FeatureGroupBuildInfo, assertFeatureFactoryWindow
-} from "./Value";
-import {GlobalInvokeStack} from "./GlobalInvokeStack";
-import {ContainerError} from "./Error";
+  FeatureGroupBuildInfo,
+  assertFeatureFactoryWindow,
+} from './Value';
+import { GlobalInvokeStack } from './GlobalInvokeStack';
 
-export type ServiceReferenceFactoryInterface = <T>(sf: SF<T>) => ServiceFactoryReference<T>;
+export type ServiceReferenceFactoryInterface = <T>(
+  sf: SF<T>
+) => ServiceFactoryReference<T>;
 
 /**
  * The core for solidgrounds connecting system.
  *
  * Original Service Factory --> Trivially man in the middle  --> Service Factory Reference.
  */
-export const asServiceFactoryReference = <T>(sf: SF<T>): ServiceFactoryReference<T> => {
+export const asServiceFactoryReference = <T>(
+  sf: SF<T>
+): ServiceFactoryReference<T> => {
   /**
    * Context functions automatically wraps there return inside a reference.
    */
@@ -33,7 +36,9 @@ export const asServiceFactoryReference = <T>(sf: SF<T>): ServiceFactoryReference
   const window = GlobalInvokeStack.getCurrent();
   assertFeatureFactoryWindow(window);
 
-  const name = functionName(sf) ?? window.serviceContainer.createPrivateServiceFactoryName();
+  const name =
+    functionName(sf) ??
+    window.serviceContainer.createPrivateServiceFactoryName();
   /**
    * Bind original service to references so 'this' can be used.
    */
@@ -65,13 +70,13 @@ export const asServiceFactoryReference = <T>(sf: SF<T>): ServiceFactoryReference
    * So only services that are required will be build during compile time.
    */
   const applyOverrides = (): T => {
-    const override = sfr.info.getOverrides().find(({success}) => !success);
+    const override = sfr.info.getOverrides().find(({ success }) => !success);
     if (!override) {
       return mainServicePointer.call(this);
     }
     const ref = mainServicePointer;
     const result = override.overrideBy(() => {
-      return override.original = ref.call(this);
+      return (override.original = ref.call(this));
     });
     mainServicePointer = () => result();
     override.success = true;

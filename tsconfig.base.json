@@ -23,6 +23,9 @@
       "@solidgrounds/serializer": ["packages/serializer/src/index.ts"],
       "@solidgrounds/ts-type-generator": [
         "packages/ts-type-generator/src/index.ts"
+      ],
+      "@solidgrounds/examples/@solidgrounds/examples": [
+        "packages/examples/@solidgrounds/examples/src/index.ts"
       ]
     }
   },

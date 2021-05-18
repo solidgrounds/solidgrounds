@@ -1,4 +1,9 @@
-import {FF, solidgrounds, getServiceInstances, SF, KernelFeatureServices, FeatureGroupBuildInfo} from "../../index";
+import {
+  FF,
+  solidgrounds,
+  KernelFeatureServices,
+  FeatureGroupBuildInfo,
+} from '../../index';
 
 interface Person {
   readonly name: string;
@@ -14,7 +19,9 @@ const kookingService = (kook: Person) => (recipe: string, food: string[]) => {
     return start;
   }
   if (food.length > 1) {
-    return `${start} with ${food.slice(0, -1).join(', ')} and ${food[food.length - 1]}`;
+    return `${start} with ${food.slice(0, -1).join(', ')} and ${
+      food[food.length - 1]
+    }`;
   }
   return `${start} with ${food[0]}`;
 };
@@ -38,21 +45,25 @@ const MyHouse: FF<HouseServices, HouseDependencies> = ({ compose }) => {
 
 const Personnel1: FF<HouseDependencies> = () => {
   return {
-    cleaner: () => ({name: 'John'}),
-    cook: () => ({name: 'Jane'}),
+    cleaner: () => ({ name: 'John' }),
+    cook: () => ({ name: 'Jane' }),
   };
 };
 
 const Personnel2: FF<HouseDependencies> = () => {
   return {
-    cleaner: () => ({name: 'Eve'}),
-    cook: () => ({name: 'Bob'}),
+    cleaner: () => ({ name: 'Eve' }),
+    cook: () => ({ name: 'Bob' }),
   };
 };
 
 const test = (house: HouseServices) => {
-  expect(house.cleanService('carpet', 'living room')).toEqual('John has cleaned the carpet in the living room');
-  expect(house.kookService('dame blanche', ['ice', 'chocolate', 'banana'])).toEqual('Jane has kooked dame blanche with ice, chocolate and banana');
+  expect(house.cleanService('carpet', 'living room')).toEqual(
+    'John has cleaned the carpet in the living room'
+  );
+  expect(
+    house.kookService('dame blanche', ['ice', 'chocolate', 'banana'])
+  ).toEqual('Jane has kooked dame blanche with ice, chocolate and banana');
 };
 
 describe('Can merge a single feature', () => {
@@ -64,9 +75,14 @@ describe('Can merge a single feature', () => {
   });
   it('Can name container ', async () => {
     const MergedFeature: FF<HouseServices, HouseDependencies> = ({ merge }) => {
-      return merge('cook', 'cleaner').with(MyHouse).create({name: 'internal container'});
+      return merge('cook', 'cleaner')
+        .with(MyHouse)
+        .create({ name: 'internal container' });
     };
-    const services = await solidgrounds().add(Personnel1).add(MergedFeature).build();
+    const services = await solidgrounds()
+      .add(Personnel1)
+      .add(MergedFeature)
+      .build();
     test(services);
   });
   it('Width private services ', async () => {
@@ -76,21 +92,30 @@ describe('Can merge a single feature', () => {
     test(await solidgrounds().add(MergedFeature).build());
   });
   it('Can pick single service ', async () => {
-    const MergedFeature: FF<Pick<HouseServices, 'cleanService'>> = ({ merge }) => {
-      return merge<HouseDependencies>(Personnel1).with(MyHouse).create('cleanService');
+    const MergedFeature: FF<Pick<HouseServices, 'cleanService'>> = ({
+      merge,
+    }) => {
+      return merge<HouseDependencies>(Personnel1)
+        .with(MyHouse)
+        .create('cleanService');
     };
     const services = await solidgrounds().add(MergedFeature).build();
-    expect(services.cleanService('carpet', 'living room')).toEqual('John has cleaned the carpet in the living room');
+    expect(services.cleanService('carpet', 'living room')).toEqual(
+      'John has cleaned the carpet in the living room'
+    );
     expect(services).not.toHaveProperty('kookService');
   });
 });
 
 it('Can merge multiple features', async () => {
-  const MergedFeature: FF<{
-    house1: HouseServices,
-    house2: HouseServices,
-    house3: HouseServices
-  }, HouseDependencies> = ({ merge }) => {
+  const MergedFeature: FF<
+    {
+      house1: HouseServices;
+      house2: HouseServices;
+      house3: HouseServices;
+    },
+    HouseDependencies
+  > = ({ merge }) => {
     const merged = merge('cook', 'cleaner').with(MyHouse);
     return {
       house1: merged.createInstance(),
@@ -98,20 +123,32 @@ it('Can merge multiple features', async () => {
       house3: merged.createInstance(),
     };
   };
-  const services = await solidgrounds().add(Personnel1).add(MergedFeature).build();
+  const services = await solidgrounds()
+    .add(Personnel1)
+    .add(MergedFeature)
+    .build();
   test(services.house1);
 
-  expect(services.house2.cleanService('carpet', 'living room')).toEqual('Eve has cleaned the carpet in the living room');
-  expect(services.house2.kookService('dame blanche', ['ice', 'chocolate', 'banana'])).toEqual('Bob has kooked dame blanche with ice, chocolate and banana');
+  expect(services.house2.cleanService('carpet', 'living room')).toEqual(
+    'Eve has cleaned the carpet in the living room'
+  );
+  expect(
+    services.house2.kookService('dame blanche', ['ice', 'chocolate', 'banana'])
+  ).toEqual('Bob has kooked dame blanche with ice, chocolate and banana');
 
   // Should be new instances
   expect(services.house3.cleanService).not.toBe(services.house1.cleanService);
 });
 
-
 it('Merge features can access KernelFeature', async () => {
-  const MergedFeature: FF<{ info: FeatureGroupBuildInfo }, KernelFeatureServices> = ({ merge }) => {
-    const hasCompilerPass: FF<{info: FeatureGroupBuildInfo}, KernelFeatureServices> = ({dependencies}) => {
+  const MergedFeature: FF<
+    { info: FeatureGroupBuildInfo },
+    KernelFeatureServices
+  > = ({ merge }) => {
+    const hasCompilerPass: FF<
+      { info: FeatureGroupBuildInfo },
+      KernelFeatureServices
+    > = ({ dependencies }) => {
       return {
         info: () => dependencies.compilerInfo(),
       };
@@ -125,10 +162,15 @@ it('Merge features can access KernelFeature', async () => {
       // // With dependency keys
       // info3: merge('info').with(hasCompilerPass).create('info').info,
       // // Duplicate dependencies
-      ...merge('compilerInfo', 'compilerPass').with(hasCompilerPass).create('info'),
+      ...merge('compilerInfo', 'compilerPass')
+        .with(hasCompilerPass)
+        .create('info'),
     };
   };
-  const services = await solidgrounds().add(Personnel1).add(MergedFeature).build();
+  const services = await solidgrounds()
+    .add(Personnel1)
+    .add(MergedFeature)
+    .build();
   expect(services.info).toBe(services.compilerInfo);
   // expect(services.info2).toBe(services.compilerInfo);
   // expect(services.info3).toBe(services.compilerInfo);

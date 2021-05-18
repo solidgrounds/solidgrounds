@@ -181,6 +181,29 @@
           }
         }
       }
+    },
+    "examples-@solidgrounds-examples": {
+      "root": "packages/examples/@solidgrounds/examples",
+      "sourceRoot": "packages/examples/@solidgrounds/examples/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "packages/examples/@solidgrounds/examples/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/examples/@solidgrounds/examples"],
+          "options": {
+            "jestConfig": "packages/examples/@solidgrounds/examples/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {

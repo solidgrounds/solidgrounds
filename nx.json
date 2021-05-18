@@ -1,9 +1,14 @@
 {
   "npmScope": "solidgrounds",
-  "affected": { "defaultBase": "master" },
+  "affected": {
+    "defaultBase": "master"
+  },
   "implicitDependencies": {
     "workspace.json": "*",
-    "package.json": { "dependencies": "*", "devDependencies": "*" },
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
@@ -14,18 +19,34 @@
       "runner": "@nrwl/nx-cloud",
       "options": {
         "cacheableOperations": ["build", "lint", "test", "e2e"],
-        "accessToken": "ZDk1Y2YzOWUtNjc3ZS00YzdiLThlMmItNzRlOGY0MTg1OGE0fHJlYWQtd3JpdGU=",
+        "accessToken": "ZDkwYmYyNzUtODAwNS00YmQzLTk4MzUtOTQ1NWI0NDhiZjkzfHJlYWQtd3JpdGU=",
         "canTrackAnalytics": false,
         "showUsageWarnings": true
       }
     }
   },
   "projects": {
-    "core": { "tags": [] },
-    "logger": { "tags": [] },
-    "serializer": { "tags": [] },
-    "ts-type-generator": { "tags": [] },
-    "cli": { "tags": [] }
+    "core": {
+      "tags": []
+    },
+    "logger": {
+      "tags": []
+    },
+    "serializer": {
+      "tags": []
+    },
+    "ts-type-generator": {
+      "tags": []
+    },
+    "cli": {
+      "tags": []
+    },
+    "examples-@solidgrounds-examples": {
+      "tags": []
+    }
   },
-  "workspaceLayout": { "appsDir": "packages", "libsDir": "packages" }
+  "workspaceLayout": {
+    "appsDir": "packages",
+    "libsDir": "packages"
+  }
 }

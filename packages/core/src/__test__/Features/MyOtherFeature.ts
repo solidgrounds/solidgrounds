@@ -1,5 +1,4 @@
-import {FeatureFactoryContext} from "../../Context";
-import {FF} from "@solidgrounds/core";
+import { FF } from '../../Value';
 
 export interface MyOtherFeatureServices {
   myOtherFeature: string;
@@ -10,7 +9,10 @@ export interface MyOtherFeatureDependencies {
   myFeature: string;
 }
 
-export const MyOtherFeature: FF<MyOtherFeatureServices, MyOtherFeatureDependencies> = ({dependencies: {myFeature}}) => ({
+export const MyOtherFeature: FF<
+  MyOtherFeatureServices,
+  MyOtherFeatureDependencies
+> = ({ dependencies: { myFeature } }) => ({
   myOtherFeature(): string {
     return 'MyOtherFeature';
   },

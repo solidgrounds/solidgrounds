@@ -1,10 +1,17 @@
-import {ServiceContainerFactory, FC, FF, ServicesAsFactories} from "@solidgrounds/core";
-import {fromPairs, toPairs} from "lodash";
+import { fromPairs, toPairs } from 'lodash';
+import { ServiceContainerFactory } from '../../index';
+import { FC, FF, ServicesAsFactories } from '../../Value';
 
-async function testFeatureFactory<S, D>(ff: FF<S, D>, dependencies: D, contextHook?: (context: FC<S, D>) => void): Promise<S & D> {
-  const services = fromPairs(toPairs(dependencies as Record<string, unknown>).map(([tag, service]) => {
-    return [tag, () => service];
-  })) as ServicesAsFactories<D>;
+function testFeatureFactory<S, D>(
+  ff: FF<S, D>,
+  dependencies: D,
+  contextHook?: (context: FC<S, D>) => void
+): Promise<S & D> {
+  const services = fromPairs(
+    toPairs(dependencies as Record<string, unknown>).map(([tag, service]) => {
+      return [tag, () => service];
+    })
+  ) as ServicesAsFactories<D>;
   const dependencyFeature: FF<D> = () => services;
   return ServiceContainerFactory.create()
     .add(dependencyFeature)
@@ -30,15 +37,21 @@ describe('FeatureFactoryContext', () => {
       }
 
       const SpecialNumberTwice = (i: number) => i * 2;
-      const MyFeature: FF<MyFeatureServices, MyFeatureDependencies> = ({ compose }) => ({
+      const MyFeature: FF<MyFeatureServices, MyFeatureDependencies> = ({
+        compose,
+      }) => ({
         specialNumber: compose(SpecialNumberTwice, 'otherSpecialNumber'),
       });
 
-      const result = await testFeatureFactory(MyFeature, { otherSpecialNumber: 1 });
+      const result = await testFeatureFactory(MyFeature, {
+        otherSpecialNumber: 1,
+      });
       expect(result.specialNumber).toEqual(2);
     });
     it('Services should be memorized', async () => {
-      const MyFeature: FF<{ that: jest.Mock }, { dep: jest.Mock }> = ({ dependencies: {dep} }) => {
+      const MyFeature: FF<{ that: jest.Mock }, { dep: jest.Mock }> = ({
+        dependencies: { dep },
+      }) => {
         return {
           that: () => dep(),
         };
@@ -53,10 +66,17 @@ describe('FeatureFactoryContext', () => {
 
   describe('Services', () => {
     it('Can fetch own and depended service factories', async () => {
-      const MyFeature: FF<{ name: string, myFullNameWithAge: string }, { age: number }> = ({ compose }) => {
+      const MyFeature: FF<
+        { name: string; myFullNameWithAge: string },
+        { age: number }
+      > = ({ compose }) => {
         return {
           name: () => 'Eric',
-          myFullNameWithAge: compose((age, name) => `${name} Pinxteren ${age}`, 'age', 'name'),
+          myFullNameWithAge: compose(
+            (age, name) => `${name} Pinxteren ${age}`,
+            'age',
+            'name'
+          ),
         };
       };
 
@@ -66,7 +86,9 @@ describe('FeatureFactoryContext', () => {
     });
 
     it('Services should be memorized', async () => {
-      const MyFeature: FF<{ foo: number }, { bar: jest.Mock<number> }> = ({ dependencies: {bar} }) => {
+      const MyFeature: FF<{ foo: number }, { bar: jest.Mock<number> }> = ({
+        dependencies: { bar },
+      }) => {
         return {
           foo: () => bar()(),
         };
@@ -94,14 +116,17 @@ describe('FeatureFactoryContext', () => {
 
       const SpecialNumberTwice = (i: number): number => i * 2;
 
-      const MyFeature: FF<MyFeatureServices, MyFeatureDependencies> = ({ compose }) => ({
+      const MyFeature: FF<MyFeatureServices, MyFeatureDependencies> = ({
+        compose,
+      }) => ({
         specialNumber: compose(SpecialNumberTwice, 'otherSpecialNumber'),
       });
 
-      const result = await testFeatureFactory(MyFeature, { otherSpecialNumber: 1 });
+      const result = await testFeatureFactory(MyFeature, {
+        otherSpecialNumber: 1,
+      });
 
       expect(result.specialNumber).toEqual(2);
     });
   });
-
 });

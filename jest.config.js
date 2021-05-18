@@ -6,5 +6,6 @@ module.exports = {
     '<rootDir>/packages/serializer',
     '<rootDir>/packages/ts-type-generator',
     '<rootDir>/packages/cli',
+    '<rootDir>/packages/examples/@solidgrounds/examples',
   ],
 };

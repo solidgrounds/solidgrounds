@@ -1,5 +1,5 @@
-import {PickByValue} from "utility-types";
-import {functionName} from "../Util";
+import { PickByValue } from 'utility-types';
+import { functionName } from '../Util';
 
 export type ServiceFactory<T> = () => T;
 
@@ -16,18 +16,25 @@ export type USF = ServiceFactory<unknown>;
 /**
  * Key or service factory
  */
-export type KSF<T, V> = ServiceFactory<V> | keyof PickByValue<T, V>
+export type KSF<T, V> = ServiceFactory<V> | keyof PickByValue<T, V>;
 
 export type ServicesAsFactories<Services> = {
   [K in keyof Services]: ServiceFactory<Services[K]>;
 };
 
-export function assertServiceFactory(sf: unknown, name: string): asserts sf is USF {
+export function assertServiceFactory(
+  sf: unknown,
+  name: string
+): asserts sf is USF {
   if (typeof sf !== 'function') {
     throw new Error(`ServiceFactory ${name} should be a function`);
   }
   if (sf.length > 0) {
-    throw new Error(`ServiceFactory '${name}' cannot have arguments (${functionName(sf as any)})`);
+    throw new Error(
+      `ServiceFactory '${name}' cannot have arguments (${functionName(
+        sf as USF
+      )})`
+    );
   }
 }
 
