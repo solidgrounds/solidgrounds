@@ -18,6 +18,9 @@ jobs:
   core:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    env:
+      NX_BRANCH: ${{ github.event.number }}
+      NX_RUN_GROUP: ${{ github.run_id }}
     steps:
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.5
@@ -30,14 +33,16 @@ jobs:
       - name: Yarn install cache
         uses: c-hive/gha-yarn-cache@v1
       - name: Install yarn packages
-        uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: install
-      - name: Create nx cache directory
-        with:
-          cmd: mkdir node_modules/.cache
-      - name: Nrwl Nx
+        run: yarn install --frozen-lockfile
+      - name: Lint and unit tests
         uses: MansaGroup/nrwl-nx-action@v2.1.0
         with:
           nxCloud: true
-          targets: lint,test,build
+          targets: lint,test
+          args: --with-deps
+      - name: Build
+        uses: MansaGroup/nrwl-nx-action@v2.1.0
+        with:
+          nxCloud: true
+          targets: build
+          args: --with-deps

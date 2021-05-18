@@ -7,8 +7,6 @@ export interface LoggerFeatureServices {
   logger: LoggerInterface;
 }
 
-export const DefaultLoggerFeature: FF<LoggerFeatureServices, {}> = () => ({
-
+export const DefaultLoggerFeature: FF<LoggerFeatureServices> = () => ({
   logger: () => new PrefixDateLogger(new ConsoleLogger(console)),
-
 });
