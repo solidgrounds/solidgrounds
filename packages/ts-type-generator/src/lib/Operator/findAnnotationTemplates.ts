@@ -1,20 +1,28 @@
-import {match} from "ramda";
-import {mergeMap, map} from "rxjs/Operators";
-import {of} from "rxjs";
-import {stripDocBlock} from "../Functions/stripDocBlock";
+import { match } from 'ramda';
+import { mergeMap, map } from 'rxjs/Operators';
+import { of } from 'rxjs';
+import { stripDocBlock } from '../Functions';
 
 /**
  * Return all generators of a single document.
  *
  * Generators need to be inside multi-doc block comment. (/* * /)
  */
-export const findAnnotationTemplates = (annotationName: string) => mergeMap((content: string) =>
-  of(match(new RegExp(`^.*@${annotationName}\\([\\s\\S.*]*?\\).*?[.\\s\\S]*?\\*\\/$`, 'gm'), content))
-    .pipe(
+export const findAnnotationTemplates = (annotationName: string) =>
+  mergeMap((content: string) =>
+    of(
+      match(
+        new RegExp(
+          `^.*@${annotationName}\\([\\s\\S.*]*?\\).*?[.\\s\\S]*?\\*\\/$`,
+          'gm'
+        ),
+        content
+      )
+    ).pipe(
       mergeMap((templates) => templates),
       map((template) => {
         const start = content.indexOf(template);
-        if (start < 0 ){
+        if (start < 0) {
           throw new Error("Can't find template in content");
         }
         const end = start + template.length;
@@ -22,7 +30,11 @@ export const findAnnotationTemplates = (annotationName: string) => mergeMap((con
         const rest = content.slice(end);
         const dockBlockEnd = end + rest.indexOf('*/') + 2;
         const dockBlock = content.slice(dockBlockStart, dockBlockEnd);
-        const indentation = /^( *)\*\//m.exec(dockBlock)![1].length  - 1;
+        const exec = /^( *)\*\//m.exec(dockBlock);
+        if (!exec) {
+          throw new Error("Can't determine code indentation");
+        }
+        const indentation = exec[1].length - 1;
         return {
           template: stripDocBlock(template),
           dockBlock,
@@ -30,4 +42,4 @@ export const findAnnotationTemplates = (annotationName: string) => mergeMap((con
         };
       })
     )
-);
+  );

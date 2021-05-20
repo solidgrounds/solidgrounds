@@ -21,6 +21,9 @@ export abstract class AbstractLogLevelLogger implements LoggerInterface {
     this.log(LogLevel.error, message, ...optionalParams);
   }
 
-  public abstract log(type: LogLevel, message?: unknown, ...optionalParams: unknown[]): void;
-
+  public abstract log(
+    type: LogLevel,
+    message?: unknown,
+    ...optionalParams: unknown[]
+  ): void;
 }

@@ -38,11 +38,5 @@ jobs:
         uses: MansaGroup/nrwl-nx-action@v2.1.0
         with:
           nxCloud: true
-          targets: lint,test
-          args: --with-deps
-      - name: Build
-        uses: MansaGroup/nrwl-nx-action@v2.1.0
-        with:
-          nxCloud: true
-          targets: build
+          targets: lint,format,test,build
           args: --with-deps

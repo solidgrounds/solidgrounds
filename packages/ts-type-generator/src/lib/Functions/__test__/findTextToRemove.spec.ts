@@ -1,6 +1,4 @@
-import { of } from 'rxjs';
-import { toArray } from 'rxjs/Operators';
-import {matchEmptyOrStatement, findTextToRemove} from '../findTextToRemove';
+import { matchEmptyOrStatement, findTextToRemove } from '../findTextToRemove';
 
 it('findTextToRemove', () => {
   expect(
@@ -22,4 +20,3 @@ ddsad;
 sad;;
 `);
 });
-

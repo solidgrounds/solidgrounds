@@ -4,11 +4,13 @@ import {
   ServicesAsFactories,
   UFF,
   assertFeatureFactoryWindow,
+  FF,
 } from '../Value';
 import { CompileContext } from './CompileContext';
 import { GlobalInvokeStack } from '../GlobalInvokeStack';
 import { MergeOptions, MergeWith } from './MergeWith';
 import { serviceInstances } from '../Util';
+import { KernelFeatureServices } from '../Feature';
 
 export interface MergeFeatureContext<Services> {
   /**
@@ -179,12 +181,19 @@ export const createFeatureMergeContext = <T>(
     merge: <S>(
       ...args: [FeatureFactory<S>] | (keyof T)[]
     ): MergeWith<T | S> => {
+      const kernel = () =>
+        ({
+          compilerPass: context.getServiceFactory('compilerPass' as keyof T),
+          compilerInfo: context.getServiceFactory('compilerInfo' as keyof T),
+        } as unknown as FF<KernelFeatureServices>);
+
       if (typeof args[0] === 'function') {
         const feature = args[0] as UFF;
-        return createMergeWith(context, [feature]);
+        return createMergeWith(context, [kernel, feature]);
       }
       const keys = args as (keyof T)[];
       const features: UFF[] = [
+        kernel,
         () =>
           fromPairs(
             keys.map((key) => [key as string, context.getServiceFactory(key)])

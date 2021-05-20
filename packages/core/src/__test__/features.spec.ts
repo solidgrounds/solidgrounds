@@ -1,5 +1,5 @@
 import 'jest';
-import {FF, solidgrounds} from '../index';
+import { FF, solidgrounds } from '../index';
 import { MyFeature } from './Features/MyFeature';
 import { MyOtherFeature } from './Features/MyOtherFeature';
 
@@ -12,7 +12,6 @@ const TestFeature: FF<TestFeature1Services> = () => ({
 });
 
 it('Can merge feature', async () => {
-
   interface TestFeature2Dependencies {
     testService1: string;
   }
@@ -22,7 +21,9 @@ it('Can merge feature', async () => {
     testService4: string;
   }
 
-  const TestFeature2: FF<TestFeature2Services, TestFeature2Dependencies> = (context) => ({
+  const TestFeature2: FF<TestFeature2Services, TestFeature2Dependencies> = (
+    context
+  ) => ({
     testService3() {
       return 'Test service 3';
     },
@@ -38,8 +39,12 @@ it('Can merge feature', async () => {
     .build();
   expect(dependencyContainer.testService1).toEqual('Test service 1');
   expect(dependencyContainer.testService3).toEqual('Test service 3');
-  expect(dependencyContainer.testService4).toEqual('test service 4 Test service 1');
-  expect(dependencyContainer.testService4).toEqual('test service 4 Test service 1');
+  expect(dependencyContainer.testService4).toEqual(
+    'test service 4 Test service 1'
+  );
+  expect(dependencyContainer.testService4).toEqual(
+    'test service 4 Test service 1'
+  );
 });
 
 it('Feature can have different dependencies', async () => {
@@ -53,12 +58,13 @@ it('Feature can have different dependencies', async () => {
 });
 
 it('Can inject with', async () => {
-
   function service(test: string): string {
     return `[${test}]`;
   }
 
-  const SomeFeature: FF<{ test: string }, TestFeature1Services> = ({ compose }) => ({
+  const SomeFeature: FF<{ test: string }, TestFeature1Services> = ({
+    compose,
+  }) => ({
     test: compose(service, 'testService1'),
   });
 
@@ -71,7 +77,6 @@ it('Can inject with', async () => {
 });
 
 it('Can inject multiple', async () => {
-
   const Multiple = () => ({
     service1(): string {
       return '1';
@@ -115,13 +120,30 @@ it('Can inject multiple', async () => {
     service6: string;
   }
 
-  const SomeFeature: FF<SomeFeatureInstances, SomeFeatureDependencies> = ({ compose }) => ({
+  const SomeFeature: FF<SomeFeatureInstances, SomeFeatureDependencies> = ({
+    compose,
+  }) => ({
     w1: compose(service, 'service1'),
     w2: compose(service, 'service1', 'service2'),
     w3: compose(service, 'service1', 'service2', 'service3'),
     w4: compose(service, 'service1', 'service2', 'service3', 'service4'),
-    w5: compose(service, 'service1', 'service2', 'service3', 'service4', 'service5'),
-    w6: compose(service, 'service1', 'service2', 'service3', 'service4', 'service5', 'service6'),
+    w5: compose(
+      service,
+      'service1',
+      'service2',
+      'service3',
+      'service4',
+      'service5'
+    ),
+    w6: compose(
+      service,
+      'service1',
+      'service2',
+      'service3',
+      'service4',
+      'service5',
+      'service6'
+    ),
   });
 
   const dependencyContainer = await solidgrounds()

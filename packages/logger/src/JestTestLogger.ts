@@ -1,9 +1,6 @@
 import { LoggerInterface } from './LoggerInterface';
 import { AbstractFunctionLogger } from './AbstractFunctionLogger';
 
-// eslint-disable-line
-declare let jest: any;
-
 export class JestTestLogger
   extends AbstractFunctionLogger
   implements LoggerInterface

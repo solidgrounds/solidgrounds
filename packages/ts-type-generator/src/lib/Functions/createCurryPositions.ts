@@ -1,6 +1,5 @@
-import {countCurry} from "./countCurry";
-import {range} from "ramda";
-import {CurryPositions} from "../CurryPositions";
+import { countCurry } from './countCurry';
+import { CurryPositions } from '../CurryPositions';
 
 export function createCurryPositions(length: number, maxCurry: number) {
   const binaries: CurryPositions[] = [];
@@ -10,12 +9,14 @@ export function createCurryPositions(length: number, maxCurry: number) {
     binaries.push(new CurryPositions(length, current));
     current += 1;
   }
-  return binaries.sort((a, b) => {
-    const ca =  countCurry(length, a);
-    const cb = countCurry(length, b);
-    if (ca === cb) {
-      return 0;
-    }
-    return ca > cb ? 1 : -1;
-  }).slice(0, maxCurry);
+  return binaries
+    .sort((a, b) => {
+      const ca = countCurry(length, a);
+      const cb = countCurry(length, b);
+      if (ca === cb) {
+        return 0;
+      }
+      return ca > cb ? 1 : -1;
+    })
+    .slice(0, maxCurry);
 }

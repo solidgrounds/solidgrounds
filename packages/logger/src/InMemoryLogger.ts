@@ -7,8 +7,10 @@ export interface LogEntry {
   optionalParams: unknown[];
 }
 
-export class InMemoryLogger extends AbstractLogLevelLogger implements LoggerInterface {
-
+export class InMemoryLogger
+  extends AbstractLogLevelLogger
+  implements LoggerInterface
+{
   private memory: Array<LogEntry> = [];
 
   public static create() {
@@ -16,7 +18,7 @@ export class InMemoryLogger extends AbstractLogLevelLogger implements LoggerInte
   }
 
   public log(level: LogLevel, message?: unknown, ...optionalParams: unknown[]) {
-    this.memory.push({level, message, optionalParams});
+    this.memory.push({ level, message, optionalParams });
   }
 
   public getLogs() {
@@ -28,8 +30,10 @@ export class InMemoryLogger extends AbstractLogLevelLogger implements LoggerInte
   }
 
   public toString(): string {
-    return this.memory.map((log) => {
-      return log.message + log.optionalParams.map((ex) => ex).join(' ');
-    }).join('\n');
+    return this.memory
+      .map((log) => {
+        return log.message + log.optionalParams.map((ex) => ex).join(' ');
+      })
+      .join('\n');
   }
 }

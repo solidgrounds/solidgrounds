@@ -8,7 +8,7 @@ export interface ThreeLoggerOptions<T> {
 }
 
 type PrintedReference<T = unknown> = {
-  ref: T,
+  ref: T;
   ignored: false;
   stringRef: string;
   printed: boolean;
@@ -16,7 +16,7 @@ type PrintedReference<T = unknown> = {
 };
 
 type IgnoredReference<T = unknown> = {
-  ref: T,
+  ref: T;
   ignored: true;
 };
 
@@ -29,12 +29,18 @@ type Reference<T> = PrintedReference<T> | IgnoredReference<T>;
  *   Whatsapp
  *   b:Hi!
  *     Whatsapp
-*    test
+ *    test
  */
-export class ThreeLogger<T = unknown> extends AbstractLogLevelLogger implements LoggerInterface {
+export class ThreeLogger<T = unknown>
+  extends AbstractLogLevelLogger
+  implements LoggerInterface
+{
   private references: Reference<T>[] = [];
 
-  public static create<T = unknown>(logger: LoggerInterface, options?: Partial<ThreeLoggerOptions<T>>): ThreeLogger<T> {
+  public static create<T = unknown>(
+    logger: LoggerInterface,
+    options?: Partial<ThreeLoggerOptions<T>>
+  ): ThreeLogger<T> {
     return new this<T>(logger, {
       eq: (a, b) => a === b,
       print: (ref) => `${ref}:`,
@@ -43,8 +49,11 @@ export class ThreeLogger<T = unknown> extends AbstractLogLevelLogger implements 
   }
 
   public increaseBy(reference: T) {
-    const {eq, print} = this.options;
-    const previousRef = findLast(this.references, ({ignored}) => !ignored ) as PrintedReference<T>;
+    const { eq, print } = this.options;
+    const previousRef = findLast(
+      this.references,
+      ({ ignored }) => !ignored
+    ) as PrintedReference<T>;
     if (!previousRef) {
       const stringRef = print(reference);
       this.references.push({
@@ -52,7 +61,7 @@ export class ThreeLogger<T = unknown> extends AbstractLogLevelLogger implements 
         ignored: false,
         stringRef: stringRef,
         printed: false,
-        prefix: ''
+        prefix: '',
       });
     } else if (eq(previousRef.ref, reference)) {
       const stringRef = print(reference);
@@ -83,22 +92,34 @@ export class ThreeLogger<T = unknown> extends AbstractLogLevelLogger implements 
     this.references = this.references.slice(0, this.references.indexOf(found));
   }
 
-  constructor(private readonly logger: LoggerInterface,
-              private readonly options: ThreeLoggerOptions<T>) {
+  constructor(
+    private readonly logger: LoggerInterface,
+    private readonly options: ThreeLoggerOptions<T>
+  ) {
     super();
   }
 
   public log(level: LogLevel, message?: unknown, ...optionalParams: unknown[]) {
     this.printRefs(level);
-    const previousRef = findLast(this.references, (ref) => !ref.ignored) as PrintedReference;
+    const previousRef = findLast(
+      this.references,
+      (ref) => !ref.ignored
+    ) as PrintedReference;
     this.logger.log(level, previousRef.prefix + message, ...optionalParams);
   }
 
   private printRefs(level: LogLevel) {
-    const previousRef = find(this.references, (ref) => !ref.ignored && !ref.printed) as PrintedReference;
+    const previousRef = find(
+      this.references,
+      (ref) => !ref.ignored && !ref.printed
+    ) as PrintedReference;
     if (previousRef) {
       previousRef.printed = true;
-      this.logger.log(level, previousRef.prefix.slice(0, -previousRef.stringRef.length), `${previousRef.stringRef}`);
+      this.logger.log(
+        level,
+        previousRef.prefix.slice(0, -previousRef.stringRef.length),
+        `${previousRef.stringRef}`
+      );
       this.printRefs(level);
     }
   }

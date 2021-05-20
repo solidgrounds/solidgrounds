@@ -1,14 +1,21 @@
 import { LoggerInterface, LogLevel } from './LoggerInterface';
 
 export abstract class AbstractFunctionLogger implements LoggerInterface {
-
   public abstract trace(message?: unknown, ...optionalParams: unknown[]): void;
+
   public abstract debug(message?: unknown, ...optionalParams: unknown[]): void;
+
   public abstract info(message?: unknown, ...optionalParams: unknown[]): void;
+
   public abstract warn(message?: unknown, ...optionalParams: unknown[]): void;
+
   public abstract error(message?: unknown, ...optionalParams: unknown[]): void;
 
-  public log(level: LogLevel, message?: unknown, ...optionalParams: unknown[]): void {
+  public log(
+    level: LogLevel,
+    message?: unknown,
+    ...optionalParams: unknown[]
+  ): void {
     switch (level) {
       case LogLevel.trace:
         this.trace(message, ...optionalParams);
@@ -28,7 +35,5 @@ export abstract class AbstractFunctionLogger implements LoggerInterface {
       default:
         throw new Error(`Log level "${level}" not supported`);
     }
-
   }
-
 }

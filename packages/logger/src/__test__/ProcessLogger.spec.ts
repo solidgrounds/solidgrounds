@@ -2,7 +2,6 @@ import { ProcessLogger } from '../ProcessLogger';
 import * as os from 'os';
 
 it('should pass log message to stdout and stderror logger', () => {
-
   const process = {
     stderr: {
       write: jest.fn(),
@@ -26,7 +25,6 @@ it('should pass log message to stdout and stderror logger', () => {
 });
 
 it('Can use different eol', () => {
-
   const process = {
     stderr: {
       write: jest.fn(),

@@ -1,5 +1,5 @@
 import { HalloFeature } from './HalloFeature';
-import solidgrounds from "@solidgrounds/core";
+import solidgrounds from '@solidgrounds/core';
 
 solidgrounds()
   // @ts-expect-error Example missing Logger service

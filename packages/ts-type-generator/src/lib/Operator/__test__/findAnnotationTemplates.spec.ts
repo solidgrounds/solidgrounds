@@ -1,4 +1,3 @@
-import { filesInMemory } from '../../Observable';
 import { toArray } from 'rxjs/Operators';
 import { of } from 'rxjs';
 import { findAnnotationTemplates } from '../findAnnotationTemplates';
@@ -16,10 +15,19 @@ it('findFunctionAnnotationTemplates', async () => {
       .toPromise()
   ).toMatchInlineSnapshot(`
     Array [
-      " @typeGenerator({ length: 10, templates:
+      Object {
+        "dockBlock": "/**
+       * @typeGenerator({ length: 10, templates:
+       * [\\"services<{K% extends keyof T}>({t%: K%}): [{T[K%]}];\\"]
+       * } )
+       */
+    ",
+        "indentation": 2,
+        "template": " @typeGenerator({ length: 10, templates:
      [\\"services<{K% extends keyof T}>({t%: K%}): [{T[K%]}];\\"]
      } )
     /",
+      },
     ]
   `);
 });
@@ -41,10 +49,28 @@ it('findFunctionAnnotationTemplates multiple', async () => {
       .toPromise()
   ).toMatchInlineSnapshot(`
     Array [
-      " @typeGenerator({ length: 10, templates: [\\"services<{K% extends keyof T}>({t%: K%}): [{T[K%]}];\\"] })
+      Object {
+        "dockBlock": "/**
+       * @typeGenerator({ length: 10, templates: [\\"services<{K% extends keyof T}>({t%: K%}): [{T[K%]}];\\"] })
+       */
+       export function servives(tags: any): any[];
+
+      /**
+       * @typeGenerator({ length: 10, templates: [\\"export function toInt({a%i: number}): void;\\"], removeNextLines: /;/})
+       */",
+        "indentation": 2,
+        "template": " @typeGenerator({ length: 10, templates: [\\"services<{K% extends keyof T}>({t%: K%}): [{T[K%]}];\\"] })
     /",
-      " @typeGenerator({ length: 10, templates: [\\"export function toInt({a%i: number}): void;\\"], removeNextLines: /;/})
+      },
+      Object {
+        "dockBlock": "/**
+       * @typeGenerator({ length: 10, templates: [\\"export function toInt({a%i: number}): void;\\"], removeNextLines: /;/})
+       */
+    ",
+        "indentation": 2,
+        "template": " @typeGenerator({ length: 10, templates: [\\"export function toInt({a%i: number}): void;\\"], removeNextLines: /;/})
     /",
+      },
     ]
   `);
 });

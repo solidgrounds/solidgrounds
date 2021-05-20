@@ -1,5 +1,5 @@
-import {FeatureFactoryBuildInfo} from "./BuildInfo";
-import {ServiceFactoryOverride} from "../Context/OverrideContext";
+import { FeatureFactoryBuildInfo } from './BuildInfo';
+import { ServiceFactoryOverride } from '../Context/OverrideContext';
 
 export interface OverrideInformation<T> {
   /**

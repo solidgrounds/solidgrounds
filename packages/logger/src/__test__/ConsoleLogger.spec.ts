@@ -2,7 +2,6 @@ import { ConsoleLogger } from '../ConsoleLogger';
 import { JestTestLogger } from '../JestTestLogger';
 
 it('should pass log message to console logger', () => {
-
   const console = new JestTestLogger() as unknown as Console;
 
   const logger = new ConsoleLogger(console);

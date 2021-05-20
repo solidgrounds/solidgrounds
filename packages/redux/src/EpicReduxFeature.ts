@@ -27,6 +27,7 @@ export function ReduxEpicFeature<S, A extends Action = AnyAction>(): FF<
       (
         epicMiddleware: EpicMiddleware<A, A, S>,
         rootEpic: Epic<A, A, S>,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         _store
       ) => {
         return () => epicMiddleware.run(rootEpic);

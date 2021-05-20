@@ -1,10 +1,7 @@
 import { SerializerInterface } from '../SerializerInterface';
 
 export class JSONSerializer implements SerializerInterface {
-
-  constructor(private beautify: boolean = true) {
-
-  }
+  constructor(private beautify: boolean = true) {}
 
   public deserialize(serialized: string): unknown {
     return JSON.parse(serialized);
@@ -16,5 +13,4 @@ export class JSONSerializer implements SerializerInterface {
     }
     return JSON.stringify(data);
   }
-
 }

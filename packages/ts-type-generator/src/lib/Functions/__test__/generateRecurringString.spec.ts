@@ -1,7 +1,4 @@
-import { of } from 'rxjs';
-import { toArray } from 'rxjs/Operators';
-import {generateRecurringString} from "../generateRecurringString";
-
+import { generateRecurringString } from '../generateRecurringString';
 
 it('generateRecurringString should generate string based on length and template', () => {
   const g = generateRecurringString(3, false);

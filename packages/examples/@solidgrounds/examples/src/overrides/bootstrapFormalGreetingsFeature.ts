@@ -8,9 +8,6 @@ solidgrounds()
   .add(GreetingsFeature)
   .add(FormalGreetingsFeature)
   .build()
-  .then(({
-           logger,
-           greetingService,
-         }) => {
+  .then(({ logger, greetingService }) => {
     logger.info(greetingService.greet('Solidgrounds'));
   });

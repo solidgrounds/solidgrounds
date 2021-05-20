@@ -1,6 +1,6 @@
 import { LogFeature } from '../singleton/LogFeature';
 import { HalloFeature } from './HalloFeature';
-import solidgrounds from "@solidgrounds/core";
+import solidgrounds from '@solidgrounds/core';
 
 solidgrounds()
   .add(LogFeature)

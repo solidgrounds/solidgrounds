@@ -1,5 +1,4 @@
 export class Database {
-
   public isConnected(): boolean {
     return false;
   }

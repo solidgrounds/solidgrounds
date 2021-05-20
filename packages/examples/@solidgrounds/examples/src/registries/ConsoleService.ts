@@ -5,12 +5,13 @@ import { ProcessInput } from './ProcessInput';
 import { ProcessOutput } from './ProcessOutput';
 
 export class ConsoleService {
-
   private commandMap = new Map<string, ConsoleCommand>();
 
-  constructor(commands: ConsoleCommand[],
-              private input: ConsoleInput = new ProcessInput(),
-              private output: ConsoleOutput = new ProcessOutput()) {
+  constructor(
+    commands: ConsoleCommand[],
+    private input: ConsoleInput = new ProcessInput(),
+    private output: ConsoleOutput = new ProcessOutput()
+  ) {
     commands.forEach((command) => {
       this.commandMap.set(command.name(), command);
     });
@@ -29,5 +30,4 @@ export class ConsoleService {
     }
     await command.execute(this.input, this.output);
   }
-
 }

@@ -1,11 +1,14 @@
-import {createNamedFunction} from "./createNamedFunction";
-import {ContainerError} from "../Error";
+import { createNamedFunction } from './createNamedFunction';
+import { ContainerError } from '../Error';
 
-export const once = <T extends () => R, R>(fn: T, name: string = fn.name): () => R => {
+export const once = <T extends () => R, R>(
+  fn: T,
+  name: string = fn.name
+): (() => R) => {
   let called = false;
   let hasResult = false;
   let result: R;
-  return createNamedFunction(  `${name}Cached`, function (this: unknown) {
+  return createNamedFunction(`${name}Cached`, function (this: unknown) {
     if (called) {
       if (hasResult) {
         return result;
@@ -14,7 +17,7 @@ export const once = <T extends () => R, R>(fn: T, name: string = fn.name): () =>
     }
     called = true;
     try {
-      result = (fn).apply(this);
+      result = fn.apply(this);
     } catch (e) {
       called = false;
       throw e;

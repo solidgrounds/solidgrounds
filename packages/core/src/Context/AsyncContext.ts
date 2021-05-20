@@ -1,10 +1,10 @@
 /**
  * Context helper for using async services.
  */
-import {asServiceFactoryReference} from "../serviceReferenceFactoryInterface";
-import {AsyncError} from "../Error";
-import {GlobalInvokeStack} from "../GlobalInvokeStack";
-import { SF } from "../Value";
+import { asServiceFactoryReference } from '../serviceReferenceFactoryInterface';
+import { AsyncError } from '../Error';
+import { GlobalInvokeStack } from '../GlobalInvokeStack';
+import { SF } from '../Value';
 
 export interface AsyncContext {
   /**
@@ -14,7 +14,7 @@ export interface AsyncContext {
 }
 
 export const createFeatureFactoryAsyncContext = (): AsyncContext => {
-  return ({
+  return {
     synchronize: <T>(asyncSf: () => Promise<T>): SF<T> => {
       let promise: Promise<void> | null = null;
       let resolved = false;
@@ -24,13 +24,15 @@ export const createFeatureFactoryAsyncContext = (): AsyncContext => {
           return Promise.resolve();
         }
         if (promise === null) {
-          promise = asyncSf().then((r: T) => {
-            resolved = true;
-            result = r;
-          }).catch((e) => {
-            promise = null;
-            return Promise.reject(e);
-          });
+          promise = asyncSf()
+            .then((r: T) => {
+              resolved = true;
+              result = r;
+            })
+            .catch((e) => {
+              promise = null;
+              return Promise.reject(e);
+            });
         }
         return promise;
       };
@@ -43,6 +45,6 @@ export const createFeatureFactoryAsyncContext = (): AsyncContext => {
         }
         throw new AsyncError(executePromise(), executePromise);
       });
-    }
-  });
+    },
+  };
 };

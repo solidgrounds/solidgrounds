@@ -2,4 +2,4 @@
 
 Special thanks to:
 
-* Eric Pinxteren
+- Eric Pinxteren
