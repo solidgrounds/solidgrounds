@@ -27,12 +27,16 @@
   },
   "private": true,
   "dependencies": {
+    "@types/redux-devtools-extension": "^2.13.2",
     "filehound": "^1.17.4",
     "immutable": "^4.0.0-rc.12",
     "joi": "^17.4.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "ramda": "^0.27.1",
+    "redux": "^4.1.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-observable": "2.0.0-rc.2",
     "transit-immutable-js": "^0.8.0",
     "ts-log": "^2.2.3",
     "utility-types": "^3.10.0"

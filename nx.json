@@ -1,7 +1,7 @@
 {
   "npmScope": "solidgrounds",
   "affected": {
-    "defaultBase": "master"
+    "defaultBase": "main"
   },
   "implicitDependencies": {
     "workspace.json": "*",
@@ -42,6 +42,9 @@
       "tags": []
     },
     "examples-@solidgrounds-examples": {
+      "tags": []
+    },
+    "redux": {
       "tags": []
     }
   },

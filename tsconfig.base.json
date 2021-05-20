@@ -26,7 +26,8 @@
       ],
       "@solidgrounds/examples/@solidgrounds/examples": [
         "packages/examples/@solidgrounds/examples/src/index.ts"
-      ]
+      ],
+      "@solidgrounds/redux": ["packages/redux/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
