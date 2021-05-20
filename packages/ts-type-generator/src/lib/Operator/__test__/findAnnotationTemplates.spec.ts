@@ -1,4 +1,4 @@
-import { toArray } from 'rxjs/Operators';
+import { toArray } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { findAnnotationTemplates } from '../findAnnotationTemplates';
 

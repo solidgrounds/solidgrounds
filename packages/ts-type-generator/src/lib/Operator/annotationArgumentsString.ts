@@ -1,4 +1,4 @@
-import { mergeMap } from 'rxjs/Operators';
+import { mergeMap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { match } from 'ramda';
 

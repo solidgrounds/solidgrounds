@@ -1,6 +1,6 @@
 import { of, OperatorFunction, EMPTY } from 'rxjs';
 import { filesInDirectory } from '../Observable';
-import { filter, map, mergeMap, tap, catchError } from 'rxjs/Operators';
+import { filter, map, mergeMap, tap, catchError } from 'rxjs/operators';
 import fs from 'fs';
 import * as os from 'os';
 

@@ -1,5 +1,5 @@
 import { match } from 'ramda';
-import { mergeMap, map } from 'rxjs/Operators';
+import { mergeMap, map } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { stripDocBlock } from '../Functions';
 

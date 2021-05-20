@@ -1,5 +1,5 @@
 import { Observable, of } from 'rxjs';
-import { mergeMap } from 'rxjs/Operators';
+import { mergeMap } from 'rxjs/operators';
 import { create } from 'filehound';
 import fs from 'fs';
 import { FileContent } from '../DTO/FileContent';

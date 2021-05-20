@@ -1,5 +1,5 @@
 import * as joi from 'joi';
-import { mergeMap, toArray } from 'rxjs/Operators';
+import { mergeMap, toArray } from 'rxjs/operators';
 import { findAnnotationTemplates, parseAnnotationArguments } from '../Operator';
 import { of } from 'rxjs';
 import { Schema } from 'joi';

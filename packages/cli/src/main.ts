@@ -4,7 +4,7 @@ import {
   generateCurryInDirectory,
 } from '@solidgrounds/ts-type-generator';
 import * as inspector from 'inspector';
-import { ignoreElements, tap } from 'rxjs/Operators';
+import { ignoreElements, tap } from 'rxjs/operators';
 import { concat } from 'rxjs';
 
 const run = (main: () => void) => {

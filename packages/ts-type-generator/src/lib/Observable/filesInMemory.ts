@@ -1,5 +1,5 @@
 import { Observable, from } from 'rxjs';
-import { map } from 'rxjs/Operators';
+import { map } from 'rxjs/operators';
 import { FileContent } from '../DTO/FileContent';
 
 export const filesInMemory: (...content: string[]) => Observable<FileContent> =

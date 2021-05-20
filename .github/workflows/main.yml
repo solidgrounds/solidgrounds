@@ -39,5 +39,4 @@ jobs:
         with:
           nxCloud: true
           targets: format:check,lint,test,build
-          parallel: true
           args: --with-deps

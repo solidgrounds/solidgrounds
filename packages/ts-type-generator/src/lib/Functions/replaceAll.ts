@@ -1,4 +1,4 @@
-import { map } from 'rxjs/Operators';
+import { map } from 'rxjs/operators';
 
 export const replaceAll = (document: string) =>
   map((replacements: { target: string; replacement: string }[]) =>

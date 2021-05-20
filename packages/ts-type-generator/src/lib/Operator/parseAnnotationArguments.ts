@@ -1,5 +1,5 @@
 import { Schema } from 'joi';
-import { map, mergeMap } from 'rxjs/Operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { annotationArgumentsString } from './annotationArgumentsString';
 

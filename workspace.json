@@ -115,17 +115,6 @@
             "jestConfig": "packages/ts-type-generator/jest.config.js",
             "passWithNoTests": true
           }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "dist/packages/ts-type-generator",
-            "tsConfig": "packages/ts-type-generator/tsconfig.lib.json",
-            "packageJson": "packages/ts-type-generator/package.json",
-            "main": "packages/ts-type-generator/src/index.ts",
-            "assets": ["packages/ts-type-generator/*.md"]
-          }
         }
       }
     },
@@ -135,29 +124,6 @@
       "projectType": "application",
       "prefix": "cli",
       "architect": {
-        "build": {
-          "builder": "@nrwl/node:build",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "dist/packages/cli",
-            "main": "packages/cli/src/main.ts",
-            "tsConfig": "packages/cli/tsconfig.app.json",
-            "assets": ["packages/cli/src/assets"]
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "packages/cli/src/environments/environment.ts",
-                  "with": "packages/cli/src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          }
-        },
         "serve": {
           "builder": "@nrwl/node:execute",
           "options": {
