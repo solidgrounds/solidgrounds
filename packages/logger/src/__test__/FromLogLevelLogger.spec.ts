@@ -3,7 +3,6 @@ import { JestTestLogger } from '../JestTestLogger';
 import { LogLevel } from '../LoggerInterface';
 
 it('From level logger', () => {
-
   const testLogger = new JestTestLogger();
   const logger = new FromLogLevelLogger(testLogger, LogLevel.warn);
 
@@ -21,11 +20,9 @@ it('From level logger', () => {
 
   logger.error('test error');
   expect(testLogger.error).toBeCalledWith('test error');
-
 });
 
 it('Should pass optionalParams', () => {
-
   const testLogger = new JestTestLogger();
   const logger = new FromLogLevelLogger(testLogger, LogLevel.warn);
 
@@ -34,5 +31,4 @@ it('Should pass optionalParams', () => {
 
   logger.error('test error', 2);
   expect(testLogger.error).toBeCalledWith('test error', 2);
-
 });

@@ -1,3 +1,6 @@
-import {CompileContext, FeatureFactoryContext} from "../Context";
+import { CompileContext, FeatureFactoryContext } from '../Context';
 
-export type CompilerPass = <S>(context: CompileContext<S>, featureContext: FeatureFactoryContext<S>) => Promise<void> | void;
+export type CompilerPass = <S>(
+  context: CompileContext<S>,
+  featureContext: FeatureFactoryContext<S>
+) => Promise<void> | void;

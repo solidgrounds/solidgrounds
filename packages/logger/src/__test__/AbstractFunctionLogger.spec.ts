@@ -2,7 +2,6 @@ import { AbstractFunctionLogger } from '../AbstractFunctionLogger';
 import { LogLevel } from '../LoggerInterface';
 
 it('Should call the correct log function', () => {
-
   class MyLogger extends AbstractFunctionLogger {
     public trace = jest.fn();
     public info = jest.fn();
@@ -30,7 +29,6 @@ it('Should call the correct log function', () => {
 });
 
 it('Throws exception when log level does not exists', () => {
-
   class MyLogger extends AbstractFunctionLogger {
     public trace = jest.fn();
     public info = jest.fn();

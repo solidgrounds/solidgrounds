@@ -1,6 +1,4 @@
-
 export class SerializerError extends Error {
-
   public static fromError(error: Error) {
     if (error instanceof this) {
       return error;
@@ -19,5 +17,4 @@ export class SerializerError extends Error {
   public getOriginalError(): Error {
     return this.originalError || this;
   }
-
 }

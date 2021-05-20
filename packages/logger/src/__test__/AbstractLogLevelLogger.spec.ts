@@ -2,14 +2,12 @@ import { AbstractLogLevelLogger } from '../AbstractLogLevelLogger';
 import { LogLevel } from '../LoggerInterface';
 
 it('should pass the correct LogLevel to the abstract log function', () => {
-
   const spy = jest.fn();
 
   class MyLogger extends AbstractLogLevelLogger {
     public log(type: LogLevel, ...message: unknown[]): void {
       spy(type, ...message);
     }
-
   }
 
   const logger = new MyLogger();

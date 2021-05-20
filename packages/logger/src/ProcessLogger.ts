@@ -9,18 +9,27 @@ import Process = NodeJS.Process;
  *
  * https://nodejs.org/api/util.html#util_util_format_format_args
  */
-export class ProcessLogger extends AbstractLogLevelLogger implements LoggerInterface {
-
+export class ProcessLogger
+  extends AbstractLogLevelLogger
+  implements LoggerInterface
+{
   constructor(private readonly process: Process, private eol = os.EOL) {
     super();
   }
 
-  public log(type: LogLevel, message?: unknown, ...optionalParams: unknown[]): void {
+  public log(
+    type: LogLevel,
+    message?: unknown,
+    ...optionalParams: unknown[]
+  ): void {
     if (type === LogLevel.error) {
-      this.process.stderr.write(util.format(message, ...optionalParams) + this.eol);
+      this.process.stderr.write(
+        util.format(message, ...optionalParams) + this.eol
+      );
       return;
     }
-    this.process.stdout.write(util.format(message, ...optionalParams) + this.eol);
+    this.process.stdout.write(
+      util.format(message, ...optionalParams) + this.eol
+    );
   }
-
 }

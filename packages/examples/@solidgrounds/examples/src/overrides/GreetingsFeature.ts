@@ -6,6 +6,8 @@ export interface GreetingsFeatureServices {
   greetingService: GreetingsServiceInterface;
 }
 
-export const GreetingsFeature: FF<GreetingsFeatureServices> = ({construct}) => ({
+export const GreetingsFeature: FF<GreetingsFeatureServices> = ({
+  construct,
+}) => ({
   greetingService: construct(CasualGreetingService),
 });

@@ -1,9 +1,8 @@
-import {CurryPositions} from "../CurryPositions";
+import { CurryPositions } from '../CurryPositions';
 
 export function countCurry(length: number, binary: CurryPositions) {
   return curryIndexes(length, binary).length;
 }
-
 
 export function curryIndexes(length: number, binary: CurryPositions) {
   const argsLeft: number[] = [];
@@ -14,7 +13,6 @@ export function curryIndexes(length: number, binary: CurryPositions) {
   }
   return argsLeft;
 }
-
 
 /**
  *         |

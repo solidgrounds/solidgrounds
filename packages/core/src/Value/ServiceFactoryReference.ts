@@ -30,6 +30,7 @@ export function isServiceFactoryReference<S>(
 
 export interface GetServiceFactory<T> {
   <S>(sf: SF<S>): SFR<S>;
+
   <K extends keyof T>(name: K): SFR<T[K]>;
 }
 

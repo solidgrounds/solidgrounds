@@ -12,5 +12,4 @@ it('should run', async () => {
     .then((container) => {
       return container.consoleService.handle();
     });
-
 });

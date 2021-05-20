@@ -1,4 +1,4 @@
-import {replace} from "ramda";
+import { replace } from 'ramda';
 
 /**
  * Remove any doc block characters from a string
@@ -10,4 +10,3 @@ import {replace} from "ramda";
  *  * /
  */
 export const stripDocBlock = replace(/^ *(\/?\*+|\/\/)/gm, '');
-

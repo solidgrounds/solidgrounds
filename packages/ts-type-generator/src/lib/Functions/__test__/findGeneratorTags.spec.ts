@@ -1,7 +1,9 @@
-import { of } from 'rxjs';
-import { toArray } from 'rxjs/Operators';
-import {findGeneratorTags, findGeneratorTagsStrings, parseGeneratorTag} from "../findGeneratorTags";
-import {GeneratorTag} from "../../DTO";
+import {
+  findGeneratorTags,
+  findGeneratorTagsStrings,
+  parseGeneratorTag,
+} from '../findGeneratorTags';
+import { GeneratorTag } from '../../DTO';
 
 it('findGeneratorTagsStrings', () => {
   expect(

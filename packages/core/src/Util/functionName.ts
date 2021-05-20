@@ -1,4 +1,4 @@
-import {isString} from "lodash";
+import { isString } from 'lodash';
 
 export const functionName = (f: (...args: unknown[]) => unknown) => {
   if (isString(f.name) && f.name.length !== 0) {

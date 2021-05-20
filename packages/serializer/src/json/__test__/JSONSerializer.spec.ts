@@ -5,7 +5,7 @@ it('Can serializer', () => {
   expect(
     serializer.serialize({
       foo: 1,
-    }),
+    })
   ).toMatchInlineSnapshot(`
     "{
       \\"foo\\": 1

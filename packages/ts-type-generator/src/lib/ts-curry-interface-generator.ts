@@ -1,29 +1,16 @@
-import {create} from 'filehound';
-import * as fs from 'fs';
-import {EOL} from 'os';
+import { EOL } from 'os';
 import * as joi from 'joi';
-import {mergeMap, toArray} from "rxjs/Operators";
-import {of} from "rxjs";
-import {findAnnotationTemplates, parseAnnotationArguments} from "./Operator";
 import {
-  BaseOptions,
-  BaseSchema,
   generateInDocument,
-  findTextToRemove,
-  generateTemplates,
-  indent,
-  replaceAll,
-  stripEmptyGeneric,
-  findGeneratorTags,
-  populateGeneratorTagTemplate,
   generateTemplate,
   generateRecurringString,
-  generateInDirectory, createCurryPositions
-} from "./Functions";
-import os from "os";
-import {curry, curryN, map} from "ramda";
-import {generateTypesInDocument} from "./ts-type-generator";
-import {CurryOptions, CurryTemplateSchema, generateFunction} from "./ts-curry-generator";
+  generateInDirectory,
+} from './Functions';
+import {
+  CurryOptions,
+  CurryTemplateSchema,
+  generateFunction,
+} from './ts-curry-generator';
 
 export interface CurryInterfaceOptions extends CurryOptions {
   interfaceTemplate: string;
@@ -44,9 +31,17 @@ ${generateFunction(i, template)}
 }
       `;
     },
-    EOL,
+    EOL
   );
 }
 
-export const generateCurryInterfaceInDocument = generateInDocument<CurryInterfaceOptions>('curryInterfaceGenerator', CurryInterfaceSchema, generateInterface);
-export const generateCurryInterfaceInDirectory = generateInDirectory('curryInterfaceGenerator', generateCurryInterfaceInDocument);
+export const generateCurryInterfaceInDocument =
+  generateInDocument<CurryInterfaceOptions>(
+    'curryInterfaceGenerator',
+    CurryInterfaceSchema,
+    generateInterface
+  );
+export const generateCurryInterfaceInDirectory = generateInDirectory(
+  'curryInterfaceGenerator',
+  generateCurryInterfaceInDocument
+);

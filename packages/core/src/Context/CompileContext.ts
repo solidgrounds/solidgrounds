@@ -1,6 +1,6 @@
-import type {GetServiceFactory, ServicesAsFactories} from '../Value';
-import {FeatureGroupFactoryInterface} from "../FeatureGroupFactoryInterface";
-import {ServiceReferenceFactoryInterface} from "../serviceReferenceFactoryInterface";
+import type { GetServiceFactory, ServicesAsFactories } from '../Value';
+import { FeatureGroupFactoryInterface } from '../FeatureGroupFactoryInterface';
+import { ServiceReferenceFactoryInterface } from '../serviceReferenceFactoryInterface';
 
 export interface CompileContext<T> {
   readonly getServices: () => ServicesAsFactories<T>;

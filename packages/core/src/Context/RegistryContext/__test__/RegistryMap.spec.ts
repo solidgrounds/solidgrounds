@@ -27,6 +27,7 @@ it('Can infer types of object', () => {
 
   expect(check).toBeDefined();
 });
+
 interface SimpleMap<K, V> {
   set(key: K, value: V): this;
 }
@@ -96,6 +97,7 @@ it('Can use map', async () => {
 
   class registry {
     public readonly values: [string, number][] = [];
+
     set(key: 'hi', value: number): this {
       this.values.push([key, value]);
       return this;

@@ -7,8 +7,10 @@ interface FormalGreetingsFeatureServices {
   formalGreetingsService: GreetingsServiceInterface;
 }
 
-export const FormalGreetingsFeature: FF<FormalGreetingsFeatureServices, GreetingsFeatureServices> = ({ override, compose, construct }) => ({
-
+export const FormalGreetingsFeature: FF<
+  FormalGreetingsFeatureServices,
+  GreetingsFeatureServices
+> = ({ override, construct }) => ({
   ...override('greetingService', 'formalGreetingsService'),
 
   formalGreetingsService: construct(FormalGreetingsService),

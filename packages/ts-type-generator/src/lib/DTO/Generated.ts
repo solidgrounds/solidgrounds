@@ -4,4 +4,3 @@ export interface Generated {
   target: string;
   generated: string;
 }
-

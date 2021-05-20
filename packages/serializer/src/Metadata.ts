@@ -6,12 +6,19 @@ export const METADATA_SYMBOL = Symbol.for('solidgrounds-metadata');
  * TODO: solve issue why 'reflect-metadata' does not work outside of this project if there are multiple instances.
  */
 export class Metadata {
-  public static defineMetadata(key: symbol | string, metadata: any, target: ClassConstructor<any>)  {
+  public static defineMetadata(
+    key: symbol | string,
+    metadata: any,
+    target: ClassConstructor<any>
+  ) {
     const classMetadata = this.getByTarget(target);
-    return classMetadata[key.toString()] = metadata;
+    return (classMetadata[key.toString()] = metadata);
   }
 
-  public static getMetadata(key: symbol | string, target: ClassConstructor<any>)  {
+  public static getMetadata(
+    key: symbol | string,
+    target: ClassConstructor<any>
+  ) {
     const classMetadata = this.getByTarget(target);
     return classMetadata[key.toString()];
   }

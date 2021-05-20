@@ -1,4 +1,4 @@
-import {stripEmptyGeneric} from "../stripEmptyGeneric";
+import { stripEmptyGeneric } from '../stripEmptyGeneric';
 
 it('stripEmptyGeneric should remove empty statements', () => {
   expect(

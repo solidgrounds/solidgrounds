@@ -9,5 +9,4 @@ solidgrounds()
     johnLogger.info('Hallo Jane!');
     const janeLogger = container.prefixedLogger('Jane:');
     janeLogger.info('Hi John!');
-
   });

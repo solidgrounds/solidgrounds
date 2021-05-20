@@ -1,6 +1,4 @@
-import { of } from 'rxjs';
-import { toArray } from 'rxjs/Operators';
-import {generateTemplate, generateTemplates} from "../generateTemplates";
+import { generateTemplate, generateTemplates } from '../generateTemplates';
 
 it('generateTemplate', () => {
   expect(

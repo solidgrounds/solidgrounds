@@ -2,44 +2,45 @@
 
 ## Features !heading
 
-Solidgrounds by its core is split into features. Each feature has his own services definitions
-so it can serve it's unique and there separate logic.
-A feature is defined as a function.
+Solidgrounds by its core is split into features. Each feature has his own services definitions so it can serve it's
+unique and there separate logic. A feature is defined as a function.
 
-######typescript "example/features/LogFeature.ts"
+###### typescript "example/features/LogFeature.ts"
 
-As you can see a feature return factory functions. The function name is the service name.
-The function implementation is the service definition. Before we can use the service from the service container
-we need to build it:   
+As you can see a feature return factory functions. The function name is the service name. The function implementation is
+the service definition. Before we can use the service from the service container we need to build it:
 
-######typescript "example/features/LogFeatureContainer.ts"
+###### typescript "example/features/LogFeatureContainer.ts"
 
-Now we can fetch the 'logger' service from the service container and start using it. In the build step of the container, function results will be memorized and can be threaded as a
-singleton based on the service factory arguments. For example, create a service with a single service factory argument:
+Now we can fetch the 'logger' service from the service container and start using it. In the build step of the container,
+function results will be memorized and can be threaded as a singleton based on the service factory arguments. For
+example, create a service with a single service factory argument:
 
-######typescript "example/singleton/LogFeature.ts"
+###### typescript "example/singleton/LogFeature.ts"
 
-The logger service function and the 'prefixedLogger' functions will always return the same instance for the same arguments. 
+The logger service function and the 'prefixedLogger' functions will always return the same instance for the same
+arguments.
 
-######typescript "example/singleton/LogFeatureContainer.ts"
+###### typescript "example/singleton/LogFeatureContainer.ts"
 
-######ts-node "example/singleton/LogFeatureContainer.ts"
+###### ts-node "example/singleton/LogFeatureContainer.ts"
 
-___
+---
 
-The service container inherited the service types from all added features.
-This gives typescript the option to **strictly type check** if everything is connected properly. 
-And you the benefits of **code completion** and the option to quickly traverse the service chain.
-___
+The service container inherited the service types from all added features. This gives typescript the option to **
+strictly type check** if everything is connected properly. And you the benefits of **code completion** and the option to
+quickly traverse the service chain.
 
-We can inject the Feature with a Container that has multiple Feature dependencies ```Container<...Feature>```.
-Let's put the type checking to the test, we create a nice feature that dependence on the 'LogFeature'.
+---
 
-######typescript "example/featureDependency/HalloFeature.ts"
+We can inject the Feature with a Container that has multiple Feature dependencies `Container<...Feature>`. Let's put
+the type checking to the test, we create a nice feature that dependence on the 'LogFeature'.
+
+###### typescript "example/featureDependency/HalloFeature.ts"
 
 Build the service container with missing 'LogFeature' dependency:
 
-######typescript "example/featureDependency/HalloFeatureErrorContainer.ts.example"
+###### typescript "example/featureDependency/HalloFeatureErrorContainer.ts.example"
 
 If you forget a feature you see a nice error of typescript in your IDE.
 
@@ -49,19 +50,19 @@ If you forget a feature you see a nice error of typescript in your IDE.
 
 Let's fix the service container by adding the LogFeature:
 
-######typescript "example/featureDependency/HalloFeatureContainer.ts"
-######ts-node "example/featureDependency/HalloFeatureContainer.ts"
+###### typescript "example/featureDependency/HalloFeatureContainer.ts"
+
+###### ts-node "example/featureDependency/HalloFeatureContainer.ts"
 
 ## Service registries !heading
 
-For solidgrounds a service registry is a collection of services that share a common interface.
-Multiple Features can *register* services to the service registry without knowing
-anything about the other features.
+For solidgrounds a service registry is a collection of services that share a common interface. Multiple Features can _
+register_ services to the service registry without knowing anything about the other features.
 
-For example let's create a service register for 'console commands' the services that are registered
-should match the common interface 'ConsoleCommand':
+For example let's create a service register for 'console commands' the services that are registered should match the
+common interface 'ConsoleCommand':
 
-######typescript "example/registries/ConsoleCommand.ts"
+###### typescript "example/registries/ConsoleCommand.ts"
 
 For solidgrounds a service registry is defined as a function
 
@@ -71,27 +72,31 @@ For solidgrounds a service registry is defined as a function
 
 To define a registry inside a feature it needs to implement the 'registries' function.
 
-######typescript "example/registries/ConsoleFeature.registerOnly.ts"
+###### typescript "example/registries/ConsoleFeature.registerOnly.ts"
 
-The 'registries' returns an associative-map, the key represents the name of the registry and the value the service registry.
+The 'registries' returns an associative-map, the key represents the name of the registry and the value the service
+registry.
 
-It's possible to add a registry to multiple feature. In the next examples, both feature return one command service inside the registry function.
- 
-######typescript "example/registries/Command/HalloConsoleFeature.ts"
+It's possible to add a registry to multiple feature. In the next examples, both feature return one command service
+inside the registry function.
 
-######typescript "example/registries/Command/ByeConsoleFeature.ts"
+###### typescript "example/registries/Command/HalloConsoleFeature.ts"
 
-Multiple feature can define the registry. The implementation needs to match between features otherwise typescript will assist you with strict type checking errors.
-During the service container build phase, the registries will be combined, so all registry functions will return the complete combined result.
+###### typescript "example/registries/Command/ByeConsoleFeature.ts"
 
-######typescript "example/registries/ConsoleFeature.ts"
+Multiple feature can define the registry. The implementation needs to match between features otherwise typescript will
+assist you with strict type checking errors. During the service container build phase, the registries will be combined,
+so all registry functions will return the complete combined result.
+
+###### typescript "example/registries/ConsoleFeature.ts"
 
 Now we can combine the different command feature and build the service container.
 
-######typescript "example/registries/console.ts"
+###### typescript "example/registries/console.ts"
 
-######ts-node "example/registries/console.ts"(hallo john)
-######ts-node "example/registries/console.ts"(bye john)
+###### ts-node "example/registries/console.ts"(hallo john)
+
+###### ts-node "example/registries/console.ts"(bye john)
 
 Registries can be fetched from the service container.
 
@@ -102,52 +107,58 @@ response type to the feature registry function.
 
 ## Setup !heading
 
-The build step returns a single promise, Each feature can have its own specific setup
-task. The feature can check if everything is configured properly or connect to external service like a database.
+The build step returns a single promise, Each feature can have its own specific setup task. The feature can check if
+everything is configured properly or connect to external service like a database.
 
-######typescript "example/setup/DatabaseFeature.ts"
+###### typescript "example/setup/DatabaseFeature.ts"
 
 Add a catch function to gracefully handle errors
 
-######typescript "example/setup/bootstrap.ts"
+###### typescript "example/setup/bootstrap.ts"
 
-######ts-node "example/setup/bootstrap.ts"
+###### ts-node "example/setup/bootstrap.ts"
 
 ## Service overrides & decorators !heading
 
-If you use an external feature, maybe you want to override some services. For example, we start with the following greetings feature:
+If you use an external feature, maybe you want to override some services. For example, we start with the following
+greetings feature:
 
-######typescript "example/overrides/GreetingsFeature.ts"
+###### typescript "example/overrides/GreetingsFeature.ts"
 
-When we run 
+When we run
 
-######typescript "example/overrides/bootstrapGreetingsFeature.ts"
+###### typescript "example/overrides/bootstrapGreetingsFeature.ts"
 
 We get:
 
-######ts-node "example/overrides/bootstrapGreetingsFeature.ts"
+###### ts-node "example/overrides/bootstrapGreetingsFeature.ts"
 
 ### Overriding a service !heading
 
 If we want to use a different way to greet we need to override the 'greetingService'
 
-######typescript "example/overrides/FormalGreetingsFeature.ts"
-######typescript "example/overrides/bootstrapFormalGreetingsFeature.ts"
+###### typescript "example/overrides/FormalGreetingsFeature.ts"
 
-Now the original 'greetingService' service is overridden for the hole application. If we now run the example we get the following result: 
+###### typescript "example/overrides/bootstrapFormalGreetingsFeature.ts"
 
-######ts-node "example/overrides/bootstrapFormalGreetingsFeature.ts"
+Now the original 'greetingService' service is overridden for the hole application. If we now run the example we get the
+following result:
+
+###### ts-node "example/overrides/bootstrapFormalGreetingsFeature.ts"
 
 ### Decorating a service !heading
 
-If we still we to use the original service from the service container. We can fetch the original service from the 'serviceOverrides' container argument.
- 
-Let's be less formal by screaming the sentence: 
+If we still we to use the original service from the service container. We can fetch the original service from the '
+serviceOverrides' container argument.
 
-######typescript "example/overrides/services/ScreamGreetingsService.ts"
-######typescript "example/overrides/ScreamGreetingsFeature.ts"
-######typescript "example/overrides/bootstrapScreamGreetingsFeature.ts"
+Let's be less formal by screaming the sentence:
+
+###### typescript "example/overrides/services/ScreamGreetingsService.ts"
+
+###### typescript "example/overrides/ScreamGreetingsFeature.ts"
+
+###### typescript "example/overrides/bootstrapScreamGreetingsFeature.ts"
 
 Now the original 'greetingService' service is overridden and we get:
 
-######ts-node "example/overrides/bootstrapScreamGreetingsFeature.ts"
+###### ts-node "example/overrides/bootstrapScreamGreetingsFeature.ts"

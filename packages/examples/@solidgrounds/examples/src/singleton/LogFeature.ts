@@ -1,11 +1,13 @@
 import { LoggerInterface } from '../features/LoggerInterface';
 import { PrefixedLogger } from './PrefixedLogger';
 import { ConsoleLogger } from '../features/ConsoleLogger';
-import { FF } from "@solidgrounds/core";
+import { FF } from '@solidgrounds/core';
 
-export const createPrefixedLogger = (logger: LoggerInterface) => (prefix: string): LoggerInterface => {
-  return new PrefixedLogger(logger, prefix);
-};
+export const createPrefixedLogger =
+  (logger: LoggerInterface) =>
+  (prefix: string): LoggerInterface => {
+    return new PrefixedLogger(logger, prefix);
+  };
 
 export interface LogFeatureInstance {
   logger: LoggerInterface;

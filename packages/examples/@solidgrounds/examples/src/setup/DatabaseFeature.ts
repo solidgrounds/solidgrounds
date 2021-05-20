@@ -5,13 +5,16 @@ export interface DatabaseFeatureServices {
   database: Database;
 }
 
-export const DatabaseFeature: FF<DatabaseFeatureServices, KernelFeatureServices> = function ({ register, construct, compose }) {
+export const DatabaseFeature: FF<
+  DatabaseFeatureServices,
+  KernelFeatureServices
+> = function ({ register, construct }) {
   return {
-    ...register('compilerPass', () => {
+    ...register('compilerPass', () => () => {
       if (this.database().isConnected()) {
         throw new Error('Database is not connected!');
       }
     }),
     database: construct(Database),
-  }
+  };
 };

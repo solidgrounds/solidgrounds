@@ -1,6 +1,4 @@
-import {match} from "ramda";
-import {EOL} from "os";
-import os from "os";
+import os from 'os';
 
 export const matchEmptyOrStatement = () => /(.*; *$|^ *$)/;
 export const findTextToRemove = (text: string, matches: RegExp) => {
@@ -14,4 +12,4 @@ export const findTextToRemove = (text: string, matches: RegExp) => {
     }
   }
   return removed.join(os.EOL);
-}
+};

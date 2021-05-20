@@ -9,8 +9,13 @@ export interface SerializeMetadata<T> {
   deNormalize?: keyof ClassConstructor<T>;
 }
 
-export function getSerializerMetadata<T>(constructor: ClassConstructor<T>): SerializeMetadata<T> {
-  const metadata: SerializeMetadata<T> = Metadata.getMetadata(SERIALIZER, constructor);
+export function getSerializerMetadata<T>(
+  constructor: ClassConstructor<T>
+): SerializeMetadata<T> {
+  const metadata: SerializeMetadata<T> = Metadata.getMetadata(
+    SERIALIZER,
+    constructor
+  );
   if (metadata) {
     return metadata;
   }
@@ -24,7 +29,10 @@ export function getSerializerMetadata<T>(constructor: ClassConstructor<T>): Seri
 /**
  * Decorator function for object to normalize it.
  */
-export function Normalize<T>(target: { constructor: ClassConstructor<T> } | any, functionName: keyof T): void {
+export function Normalize<T>(
+  target: { constructor: ClassConstructor<T> } | any,
+  functionName: keyof T
+): void {
   const constructor = target.constructor;
   const metadata: SerializeMetadata<T> = getSerializerMetadata(constructor);
   metadata.normalize = functionName;
@@ -34,7 +42,10 @@ export function Normalize<T>(target: { constructor: ClassConstructor<T> } | any,
 /**
  * Decorator static function to de-normalize it.
  */
-export function DeNormalize<T>(constructor: ClassConstructor<T>, functionName: string): void {
+export function DeNormalize<T>(
+  constructor: ClassConstructor<T>,
+  functionName: string
+): void {
   const metadata: SerializeMetadata<T> = getSerializerMetadata(constructor);
   metadata.deNormalize = functionName as any;
   Metadata.defineMetadata(SERIALIZER, metadata, constructor);

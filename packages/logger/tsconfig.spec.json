@@ -10,6 +10,7 @@
     "**/*.spec.tsx",
     "**/*.spec.js",
     "**/*.spec.jsx",
+    "**/JestTestLogger.ts",
     "**/*.d.ts"
   ]
 }

@@ -1,4 +1,4 @@
-import {replace} from "ramda";
+import { replace } from 'ramda';
 
 /**
  * Remove all ,< from empty generic functions.
@@ -20,6 +20,5 @@ import {replace} from "ramda";
  */
 export const stripEmptyGeneric = (value: string) => {
   const replaced = replace(/<>|([<(]), *|( *, *),|, *(\))/gm, '$1$2$3')(value);
-  return replaced.replace(/(<)(, *)*/gm, '$1')
+  return replaced.replace(/(<)(, *)*/gm, '$1');
 };
-
