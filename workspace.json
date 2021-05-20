@@ -204,6 +204,38 @@
           }
         }
       }
+    },
+    "redux": {
+      "root": "packages/redux",
+      "sourceRoot": "packages/redux/src",
+      "projectType": "library",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/redux",
+            "tsConfig": "packages/redux/tsconfig.lib.json",
+            "packageJson": "packages/redux/package.json",
+            "main": "packages/redux/src/index.ts",
+            "assets": ["packages/redux/*.md"]
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/redux/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/redux"],
+          "options": {
+            "jestConfig": "packages/redux/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {

@@ -17,6 +17,7 @@ import { createFeatureFactoryContext } from '../../Context';
 import { ContainerError, retryUntilNoAsyncErrors } from '../../Error';
 import { GlobalInvokeStack } from '../../GlobalInvokeStack';
 import { CompilerPass } from '../CompilerPass';
+import { KernelFeatureServices } from '../../Feature';
 
 export class FeatureGroupBuildInfo<S = unknown>
   extends BuildInfo
@@ -107,6 +108,18 @@ export class FeatureGroupBuildInfo<S = unknown>
    */
   public async compile() {
     const promises: (Promise<void> | null)[] = [];
+
+    // TODO: Cleanup call.
+    // Call compiler pass registry to resolve all pending overrides.
+    await GlobalInvokeStack.runAsync({ serviceContainer: this }, async () =>
+      retryUntilNoAsyncErrors(async () => {
+        (
+          this
+            .references as unknown as ServiceFactoryReferences<KernelFeatureServices>
+        ).compilerPass();
+      })
+    );
+
     // Execute compiler passes
     await GlobalInvokeStack.runAsync({ serviceContainer: this }, async () =>
       retryUntilNoAsyncErrors(() =>
